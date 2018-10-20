@@ -52,22 +52,24 @@ function addPhraseToDisplay(arr) {
 function checkLetter(guess) {
   const letters = document.querySelectorAll('.letter'); //letters with className .letter
   for (i = 0; i < letters.length; i++) {
-    if (guess == letters[i].textContent) {
+    if (guess.textContent == letters[i].textContent) {
       letters[i].className = 'show';
       const correctGuess = document.querySelector('show');
-    } else {} // this is always called no matter what...???
-  }
+    } 
+  } return null;
 }
 
 //Event listener on keyboard letters
 qwerty.addEventListener('click', (e) => {
   if (e.target.tagName == 'BUTTON') {
-    //console.log(e.target.textContent);
-    chosenLetter = e.target.textContent;
-    //add className .chosen BUT too what, and how...?
-    checkLetter(chosenLetter);
+		const chosenLetterButton = e.target;
+		chosenLetterButton.classList.add('chosen'); //classListt.add() applies class .chosen
+		chosenLetterButton.disabled = 'true'; //disable clicked button
+    checkLetter(chosenLetterButton); // call checkLetter Function with chosen letter
   }
 });
+
+
 
 
 
