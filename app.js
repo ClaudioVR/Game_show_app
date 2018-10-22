@@ -15,25 +15,29 @@ const phrases = [
 
 //chosen phrase for game
 const phraseArray = getRandomPhraseAsArray(phrases);
+
 //hidden letters on display
 const visbilePhrase = document.querySelector('#phrase ul');
-//chosen letter from keyboard
-let chosenLetter;
+
 
 
 
 //remove overlay
+
 startGameButton.addEventListener('click', () => {
     overlay.style.display = 'none';
   });
 
 //get random phrase from array phrases
+
 function getRandomPhraseAsArray(arr) {
   let randomPhrase = phrases[Math.floor(Math.random()*phrases.length)];
   return randomPhrase.split("");
 }
 
+
 //display randomly picked phrase
+
 function addPhraseToDisplay(arr) {
   for (i = 0; i < arr.length; i++) {
     const listItem = document.createElement('li');
@@ -47,31 +51,45 @@ function addPhraseToDisplay(arr) {
   }
 }
 
+addPhraseToDisplay(phraseArray); // call fuction to display phrase
+
 
 //check chosen letters for match in phrase
+
+let match = null;
+
 function checkLetter(guess) {
-  const letters = document.querySelectorAll('.letter'); //letters with className .letter
+  const letters = document.querySelectorAll('.letter'); 
   for (i = 0; i < letters.length; i++) {
     if (guess.textContent == letters[i].textContent) {
       letters[i].className = 'show';
       const correctGuess = document.querySelector('show');
+			match = true;
     } 
-  } return null;
+  } return match; 
 }
 
 //Event listener on keyboard letters
+
 qwerty.addEventListener('click', (e) => {
   if (e.target.tagName == 'BUTTON') {
 		const chosenLetterButton = e.target;
-		chosenLetterButton.classList.add('chosen'); //classListt.add() applies class .chosen
-		chosenLetterButton.disabled = 'true'; //disable clicked button
-    checkLetter(chosenLetterButton); // call checkLetter Function with chosen letter
+		chosenLetterButton.classList.add('chosen'); 
+		chosenLetterButton.disabled = 'true'; 
+    checkLetter(chosenLetterButton); 
+		
+		const letterFound = match;
+		if (letterFound == null) {
+		missed++;
+		console.log('Failed guesses: ' + missed);
+		}
   }
+	
 });
 
 
 
 
 
-getRandomPhraseAsArray(phrases);
-addPhraseToDisplay(phraseArray);
+
+
