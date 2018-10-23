@@ -1,9 +1,16 @@
+const startGameButton = document.querySelector('.btn__reset');
+const overlay = document.getElementById('overlay'); //welcome page
+
 const qwerty = document.getElementById('qwerty'); //keyboard buttons
 const phrase = document.getElementById('phrase'); //empty ul
 const button = document.querySelector('button');
+
+const show = document.getElementsByClassName('show');
+const letter = document.getElementsByClassName('letter');
+
+
 let missed = 0; //wrong answers
-const startGameButton = document.querySelector('.btn__reset');
-const overlay = document.getElementById('overlay'); //welcome page
+let match = null;
 
 const phrases = [
   'happy friday',
@@ -18,6 +25,7 @@ const phraseArray = getRandomPhraseAsArray(phrases);
 
 //hidden letters on display
 const visbilePhrase = document.querySelector('#phrase ul');
+
 
 
 
@@ -56,14 +64,12 @@ addPhraseToDisplay(phraseArray); // call fuction to display phrase
 
 //check chosen letters for match in phrase
 
-let match = null;
-
 function checkLetter(guess) {
-  const letters = document.querySelectorAll('.letter'); 
+	match = null;
+	let letters = document.querySelectorAll('.letter'); //unrevealed letters collection
   for (i = 0; i < letters.length; i++) {
     if (guess.textContent == letters[i].textContent) {
-      letters[i].className = 'show';
-      const correctGuess = document.querySelector('show');
+      letters[i].classList.add('show');
 			match = true;
     } 
   } return match; 
@@ -85,9 +91,29 @@ qwerty.addEventListener('click', (e) => {
 		}
   }
 	
+	checkWin(); 
+	
 });
 
 
+// check if game is won or game over
+
+function checkWin() {
+
+	const header = document.querySelector('#overlay h2')
+	
+	if (show.length == letter.length) {
+		overlay.style.display = 'flex';
+		overlay.className = 'win';
+		header.textContent = 'Congratulations, you won.'
+		// TODO: change button to play again
+	} else if (missed >= 5) {
+		overlay.style.display = 'flex';
+		overlay.className = 'lose';
+		header.textContent = 'Game over.'
+		// TODO: change button to play again
+		}
+}
 
 
 
